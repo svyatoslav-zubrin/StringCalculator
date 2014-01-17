@@ -21,6 +21,10 @@
 		84AD5E2D1889612F00DB1EED /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84AD5E0F1889612F00DB1EED /* UIKit.framework */; };
 		84AD5E351889612F00DB1EED /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 84AD5E331889612F00DB1EED /* InfoPlist.strings */; };
 		84AD5E371889612F00DB1EED /* SZStringCalculatorTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 84AD5E361889612F00DB1EED /* SZStringCalculatorTests.m */; };
+		84AD5E431889635700DB1EED /* SZCalculator.m in Sources */ = {isa = PBXBuildFile; fileRef = 84AD5E421889635700DB1EED /* SZCalculator.m */; };
+		84AD5E46188967C800DB1EED /* SZNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 84AD5E45188967C800DB1EED /* SZNode.m */; };
+		84AD5E491889682100DB1EED /* SZNumberNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 84AD5E481889682100DB1EED /* SZNumberNode.m */; };
+		84AD5E4C18896BFE00DB1EED /* SZOperationNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 84AD5E4B18896BFE00DB1EED /* SZOperationNode.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -53,6 +57,14 @@
 		84AD5E321889612F00DB1EED /* SZStringCalculatorTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "SZStringCalculatorTests-Info.plist"; sourceTree = "<group>"; };
 		84AD5E341889612F00DB1EED /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		84AD5E361889612F00DB1EED /* SZStringCalculatorTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SZStringCalculatorTests.m; sourceTree = "<group>"; };
+		84AD5E411889635700DB1EED /* SZCalculator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SZCalculator.h; path = Classes/Calculator/SZCalculator.h; sourceTree = "<group>"; };
+		84AD5E421889635700DB1EED /* SZCalculator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SZCalculator.m; path = Classes/Calculator/SZCalculator.m; sourceTree = "<group>"; };
+		84AD5E44188967C800DB1EED /* SZNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SZNode.h; path = Classes/Calculator/SZNode.h; sourceTree = "<group>"; };
+		84AD5E45188967C800DB1EED /* SZNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SZNode.m; path = Classes/Calculator/SZNode.m; sourceTree = "<group>"; };
+		84AD5E471889682100DB1EED /* SZNumberNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SZNumberNode.h; path = Classes/Calculator/SZNumberNode.h; sourceTree = "<group>"; };
+		84AD5E481889682100DB1EED /* SZNumberNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SZNumberNode.m; path = Classes/Calculator/SZNumberNode.m; sourceTree = "<group>"; };
+		84AD5E4A18896BFE00DB1EED /* SZOperationNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SZOperationNode.h; path = Classes/Calculator/SZOperationNode.h; sourceTree = "<group>"; };
+		84AD5E4B18896BFE00DB1EED /* SZOperationNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SZOperationNode.m; path = Classes/Calculator/SZOperationNode.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -112,6 +124,7 @@
 		84AD5E111889612F00DB1EED /* SZStringCalculator */ = {
 			isa = PBXGroup;
 			children = (
+				84AD5E401889631A00DB1EED /* Calculator */,
 				84AD5E1A1889612F00DB1EED /* SZAppDelegate.h */,
 				84AD5E1B1889612F00DB1EED /* SZAppDelegate.m */,
 				84AD5E1D1889612F00DB1EED /* Main.storyboard */,
@@ -150,6 +163,21 @@
 				84AD5E331889612F00DB1EED /* InfoPlist.strings */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		84AD5E401889631A00DB1EED /* Calculator */ = {
+			isa = PBXGroup;
+			children = (
+				84AD5E411889635700DB1EED /* SZCalculator.h */,
+				84AD5E421889635700DB1EED /* SZCalculator.m */,
+				84AD5E44188967C800DB1EED /* SZNode.h */,
+				84AD5E45188967C800DB1EED /* SZNode.m */,
+				84AD5E471889682100DB1EED /* SZNumberNode.h */,
+				84AD5E481889682100DB1EED /* SZNumberNode.m */,
+				84AD5E4A18896BFE00DB1EED /* SZOperationNode.h */,
+				84AD5E4B18896BFE00DB1EED /* SZOperationNode.m */,
+			);
+			name = Calculator;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -250,9 +278,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				84AD5E431889635700DB1EED /* SZCalculator.m in Sources */,
+				84AD5E491889682100DB1EED /* SZNumberNode.m in Sources */,
 				84AD5E221889612F00DB1EED /* SZViewController.m in Sources */,
 				84AD5E181889612F00DB1EED /* main.m in Sources */,
 				84AD5E1C1889612F00DB1EED /* SZAppDelegate.m in Sources */,
+				84AD5E4C18896BFE00DB1EED /* SZOperationNode.m in Sources */,
+				84AD5E46188967C800DB1EED /* SZNode.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
