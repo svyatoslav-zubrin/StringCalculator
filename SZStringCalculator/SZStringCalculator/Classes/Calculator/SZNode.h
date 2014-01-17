@@ -11,10 +11,10 @@
 @interface SZNode : NSObject
 {
     BOOL isLeaf;
-    BOOL isRoot;
 }
 
-@property (nonatomic, strong, readonly) SZNode *parentNode;
+@property (nonatomic, assign, setter = makeRoot:) BOOL isRoot;
+@property (nonatomic, strong) SZNode *parentNode;
 
 - (id)initWithParentNode:(SZNode *)node;
 

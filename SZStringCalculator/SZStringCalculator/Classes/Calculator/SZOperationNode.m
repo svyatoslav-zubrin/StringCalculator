@@ -11,12 +11,14 @@
 
 @interface SZOperationNode ()
 @property (nonatomic, assign) SZOperationNodeType type;
-@property (nonatomic, strong) SZNode *firstArgument, *secondArgument;
 @end
 
 
 @implementation SZOperationNode
 
+/*
+ * Designated initializer
+ */
 - (id)initWithParentNode:(SZNode *)parentNode
            FirstArgument:(SZNode *)firstArg
           secondArgument:(SZNode *)secondArg
@@ -25,11 +27,21 @@
     self = [super initWithParentNode:parentNode];
     if (self)
     {
+        isLeaf              = NO;
         self.type           = type_;
         self.firstArgument  = firstArg;
         self.secondArgument = secondArg;
+        [self makeRoot:NO];
     }
     return self;
+}
+
+- (id)initWithType:(SZOperationNodeType)type
+{
+    return [self initWithParentNode:nil
+                      FirstArgument:nil
+                     secondArgument:nil
+                             ofType:type];
 }
 
 @end

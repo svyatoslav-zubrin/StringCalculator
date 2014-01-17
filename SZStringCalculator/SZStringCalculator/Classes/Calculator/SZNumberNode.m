@@ -17,17 +17,26 @@
 
 @implementation SZNumberNode
 
+/*
+ * Designated initializer
+ */
 - (id)initWithValue:(NSNumber *)valueNumber
          parentNode:(SZOperationNode *)operationNode
 {
     self = [super initWithParentNode:operationNode];
     if (self)
     {
-        isLeaf = YES;
-        isRoot = NO;
-        self.value = valueNumber;
+        isLeaf      = YES;
+        self.value  = valueNumber;
+        [self makeRoot:NO];
     }
     return self;
 }
+
+- (id)initWithValue:(NSNumber *)valueNumber
+{
+    return [self initWithValue:valueNumber parentNode:nil];
+}
+
 
 @end

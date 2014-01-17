@@ -7,9 +7,11 @@
 //
 
 #import "SZViewController.h"
+#import "SZCalculator.h"
+
 
 @interface SZViewController ()
-
+@property (nonatomic, strong) SZCalculator *calculator;
 @end
 
 @implementation SZViewController
@@ -24,6 +26,14 @@
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    
+    self.calculator = [[SZCalculator alloc] init];
+    [self.calculator calculateExpression:@"11 +32 - 7 *8" error:nil];
 }
 
 @end

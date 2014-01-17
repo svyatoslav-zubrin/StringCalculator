@@ -14,6 +14,8 @@
 
 @property (nonatomic, strong, readonly) NSNumber *value;
 
-- (id)initWithValue:(NSNumber *)valueNumber parentNode:(SZOperationNode *)operationNode;
+- (id)initWithValue:(NSNumber *)valueNumber;
+- (id)initWithValue:(NSNumber *)valueNumber
+         parentNode:(SZOperationNode *)operationNode;
 
 @end

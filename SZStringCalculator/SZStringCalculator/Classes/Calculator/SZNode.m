@@ -9,11 +9,6 @@
 #import "SZNode.h"
 
 
-@interface SZNode ()
-@property (nonatomic, strong) SZNode *parentNode;
-@end
-
-
 @implementation SZNode
 
 /*
@@ -24,9 +19,9 @@
     self = [super init];
     if (self)
     {
-        isLeaf = NO;
-        isRoot = YES;
+        isLeaf          = NO;
         self.parentNode = node;
+        [self makeRoot:YES];
     }
     return self;
 }

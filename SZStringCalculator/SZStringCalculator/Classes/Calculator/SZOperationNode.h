@@ -11,8 +11,8 @@
 
 typedef enum SZOperationNodeType
 {
-    SZOperationNodeTypePlus     = 0,
-    SZOperationNodeTypeMinus    = 1,
+    SZOperationNodeTypeAdd      = 0,
+    SZOperationNodeTypeSubtract = 1,
     SZOperationNodeTypeMultiply = 2,
     SZOperationNodeTypeDivide   = 3
 } SZOperationNodeType;
@@ -21,8 +21,9 @@ typedef enum SZOperationNodeType
 @interface SZOperationNode : SZNode
 
 @property (nonatomic, assign, readonly) SZOperationNodeType type;
-@property (nonatomic, strong, readonly) SZNode *firstArgument, *secondArgument;
+@property (nonatomic, strong) SZNode *firstArgument, *secondArgument;
 
+- (id)initWithType:(SZOperationNodeType)type;
 - (id)initWithParentNode:(SZNode *)parentNode
            FirstArgument:(SZNode *)firstArg
           secondArgument:(SZNode *)secondArg
