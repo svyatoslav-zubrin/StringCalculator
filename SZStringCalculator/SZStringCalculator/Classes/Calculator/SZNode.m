@@ -9,6 +9,11 @@
 #import "SZNode.h"
 
 
+@interface SZNode ()
+@property (nonatomic, assign) SZNodePrecidency precidency;
+@end
+
+
 @implementation SZNode
 
 /*

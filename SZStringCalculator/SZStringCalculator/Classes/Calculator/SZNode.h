@@ -7,12 +7,15 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "SZMathGrammar.h"
+
 
 @interface SZNode : NSObject
 {
     BOOL isLeaf;
 }
 
+@property (nonatomic, assign, readonly) SZNodePrecidency precidency;
 @property (nonatomic, assign, setter = makeRoot:) BOOL isRoot;
 @property (nonatomic, strong) SZNode *parentNode;
 

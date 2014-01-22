@@ -33,7 +33,8 @@
     [super viewDidAppear:animated];
     
     self.calculator = [[SZCalculator alloc] init];
-    [self.calculator calculateExpression:@"11 +32 - 7 *8" error:nil];
+    [self.calculator calculateExpression:@"-(1*-2)"//@"- (11 + 32) * (- 4 + 6 / (8 - 7))"
+                                   error:nil];
 }
 
 @end

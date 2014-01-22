@@ -26,6 +26,9 @@
 		84AD5E491889682100DB1EED /* SZNumberNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 84AD5E481889682100DB1EED /* SZNumberNode.m */; };
 		84AD5E4C18896BFE00DB1EED /* SZOperationNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 84AD5E4B18896BFE00DB1EED /* SZOperationNode.m */; };
 		84AD5E4F18896FDF00DB1EED /* SZExpressionParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 84AD5E4E18896FDF00DB1EED /* SZExpressionParser.m */; };
+		84E25C3D188FD98900EA8029 /* NSMutableArray+Stack.m in Sources */ = {isa = PBXBuildFile; fileRef = 84E25C3C188FD98900EA8029 /* NSMutableArray+Stack.m */; };
+		84E25C43188FE83300EA8029 /* SZMathGrammar.m in Sources */ = {isa = PBXBuildFile; fileRef = 84E25C42188FE83300EA8029 /* SZMathGrammar.m */; };
+		84E25C46188FFF7A00EA8029 /* SZBracketNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 84E25C45188FFF7A00EA8029 /* SZBracketNode.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -68,6 +71,12 @@
 		84AD5E4B18896BFE00DB1EED /* SZOperationNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SZOperationNode.m; path = Classes/Calculator/SZOperationNode.m; sourceTree = "<group>"; };
 		84AD5E4D18896FDF00DB1EED /* SZExpressionParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SZExpressionParser.h; path = Classes/Calculator/SZExpressionParser.h; sourceTree = "<group>"; };
 		84AD5E4E18896FDF00DB1EED /* SZExpressionParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SZExpressionParser.m; path = Classes/Calculator/SZExpressionParser.m; sourceTree = "<group>"; };
+		84E25C3B188FD98900EA8029 /* NSMutableArray+Stack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSMutableArray+Stack.h"; path = "Categories/NSMutableArray+Stack.h"; sourceTree = "<group>"; };
+		84E25C3C188FD98900EA8029 /* NSMutableArray+Stack.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSMutableArray+Stack.m"; path = "Categories/NSMutableArray+Stack.m"; sourceTree = "<group>"; };
+		84E25C41188FE83300EA8029 /* SZMathGrammar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SZMathGrammar.h; path = Classes/Calculator/SZMathGrammar.h; sourceTree = "<group>"; };
+		84E25C42188FE83300EA8029 /* SZMathGrammar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SZMathGrammar.m; path = Classes/Calculator/SZMathGrammar.m; sourceTree = "<group>"; };
+		84E25C44188FFF7A00EA8029 /* SZBracketNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SZBracketNode.h; path = Classes/Calculator/SZBracketNode.h; sourceTree = "<group>"; };
+		84E25C45188FFF7A00EA8029 /* SZBracketNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SZBracketNode.m; path = Classes/Calculator/SZBracketNode.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -171,18 +180,48 @@
 		84AD5E401889631A00DB1EED /* Calculator */ = {
 			isa = PBXGroup;
 			children = (
+				84E25C3F188FD9AB00EA8029 /* Classes */,
+				84E25C3E188FD99E00EA8029 /* Categories */,
+			);
+			name = Calculator;
+			sourceTree = "<group>";
+		};
+		84E25C3E188FD99E00EA8029 /* Categories */ = {
+			isa = PBXGroup;
+			children = (
+				84E25C3B188FD98900EA8029 /* NSMutableArray+Stack.h */,
+				84E25C3C188FD98900EA8029 /* NSMutableArray+Stack.m */,
+			);
+			name = Categories;
+			sourceTree = "<group>";
+		};
+		84E25C3F188FD9AB00EA8029 /* Classes */ = {
+			isa = PBXGroup;
+			children = (
 				84AD5E411889635700DB1EED /* SZCalculator.h */,
 				84AD5E421889635700DB1EED /* SZCalculator.m */,
+				84E25C40188FE21F00EA8029 /* Math expression parser */,
+			);
+			name = Classes;
+			sourceTree = "<group>";
+		};
+		84E25C40188FE21F00EA8029 /* Math expression parser */ = {
+			isa = PBXGroup;
+			children = (
 				84AD5E4D18896FDF00DB1EED /* SZExpressionParser.h */,
 				84AD5E4E18896FDF00DB1EED /* SZExpressionParser.m */,
+				84E25C41188FE83300EA8029 /* SZMathGrammar.h */,
+				84E25C42188FE83300EA8029 /* SZMathGrammar.m */,
 				84AD5E44188967C800DB1EED /* SZNode.h */,
 				84AD5E45188967C800DB1EED /* SZNode.m */,
 				84AD5E471889682100DB1EED /* SZNumberNode.h */,
 				84AD5E481889682100DB1EED /* SZNumberNode.m */,
 				84AD5E4A18896BFE00DB1EED /* SZOperationNode.h */,
 				84AD5E4B18896BFE00DB1EED /* SZOperationNode.m */,
+				84E25C44188FFF7A00EA8029 /* SZBracketNode.h */,
+				84E25C45188FFF7A00EA8029 /* SZBracketNode.m */,
 			);
-			name = Calculator;
+			name = "Math expression parser";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -283,12 +322,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				84E25C3D188FD98900EA8029 /* NSMutableArray+Stack.m in Sources */,
 				84AD5E431889635700DB1EED /* SZCalculator.m in Sources */,
+				84E25C43188FE83300EA8029 /* SZMathGrammar.m in Sources */,
 				84AD5E4F18896FDF00DB1EED /* SZExpressionParser.m in Sources */,
 				84AD5E491889682100DB1EED /* SZNumberNode.m in Sources */,
 				84AD5E221889612F00DB1EED /* SZViewController.m in Sources */,
 				84AD5E181889612F00DB1EED /* main.m in Sources */,
 				84AD5E1C1889612F00DB1EED /* SZAppDelegate.m in Sources */,
+				84E25C46188FFF7A00EA8029 /* SZBracketNode.m in Sources */,
 				84AD5E4C18896BFE00DB1EED /* SZOperationNode.m in Sources */,
 				84AD5E46188967C800DB1EED /* SZNode.m in Sources */,
 			);
@@ -499,6 +541,7 @@
 				84AD5E3C1889612F00DB1EED /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		84AD5E3D1889612F00DB1EED /* Build configuration list for PBXNativeTarget "SZStringCalculatorTests" */ = {
 			isa = XCConfigurationList;
@@ -507,6 +550,7 @@
 				84AD5E3F1889612F00DB1EED /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

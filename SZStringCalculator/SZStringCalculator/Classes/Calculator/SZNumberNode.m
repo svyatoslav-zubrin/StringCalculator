@@ -13,6 +13,7 @@
 
 @interface SZNumberNode ()
 @property (nonatomic, strong) NSNumber *value;
+@property (nonatomic, assign) SZNodePrecidency precidency;
 @end
 
 @implementation SZNumberNode
@@ -26,8 +27,9 @@
     self = [super initWithParentNode:operationNode];
     if (self)
     {
-        isLeaf      = YES;
-        self.value  = valueNumber;
+        isLeaf          = YES;
+        self.value      = valueNumber;
+        self.precidency = SZNodePrecidencyLevel0;
         [self makeRoot:NO];
     }
     return self;
@@ -38,5 +40,9 @@
     return [self initWithValue:valueNumber parentNode:nil];
 }
 
+- (NSString *)description
+{
+    return [NSString stringWithFormat:@" %@ ", self.value];
+}
 
 @end

@@ -8,25 +8,17 @@
 
 #import "SZNode.h"
 
-
-typedef enum SZOperationNodeType
-{
-    SZOperationNodeTypeAdd      = 0,
-    SZOperationNodeTypeSubtract = 1,
-    SZOperationNodeTypeMultiply = 2,
-    SZOperationNodeTypeDivide   = 3
-} SZOperationNodeType;
-
-
 @interface SZOperationNode : SZNode
 
-@property (nonatomic, assign, readonly) SZOperationNodeType type;
+@property (nonatomic, assign, readonly) BOOL isUnary;
+@property (nonatomic, assign, readonly) SZOperationType type;
 @property (nonatomic, strong) SZNode *firstArgument, *secondArgument;
 
-- (id)initWithType:(SZOperationNodeType)type;
+- (id)initWithString:(NSString *)string unary:(BOOL)isUnary;
+- (id)initWithType:(SZOperationType)type;
 - (id)initWithParentNode:(SZNode *)parentNode
            FirstArgument:(SZNode *)firstArg
           secondArgument:(SZNode *)secondArg
-                  ofType:(SZOperationNodeType)type;
+                  ofType:(SZOperationType)type;
 
 @end
