@@ -34,9 +34,9 @@
     
     self.calculator = [[SZCalculator alloc] init];
     NSError *error = nil;
-    CGFloat res = [self.calculator calculateExpression:@"- (11 + 32.32) * (- 4 + 6 / (8 - 6))"
+    CGFloat res = [self.calculator calculateExpression:@"- (11 + 32.32)) * (- 4 + 6 / (8 - 6))"
                                                  error:&error];
-    NSLog(@"result = : %f, error: %@", res, [error localizedDescription]);
+    NSLog(@"result = : %f, error: %@", res, [error description]);
 }
 
 @end

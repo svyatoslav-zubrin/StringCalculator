@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		846D8DA8189968DC004C6807 /* SZError.m in Sources */ = {isa = PBXBuildFile; fileRef = 846D8DA7189968DC004C6807 /* SZError.m */; };
 		84AD5E0C1889612F00DB1EED /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84AD5E0B1889612F00DB1EED /* Foundation.framework */; };
 		84AD5E0E1889612F00DB1EED /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84AD5E0D1889612F00DB1EED /* CoreGraphics.framework */; };
 		84AD5E101889612F00DB1EED /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84AD5E0F1889612F00DB1EED /* UIKit.framework */; };
@@ -42,6 +43,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		846D8DA6189968DC004C6807 /* SZError.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SZError.h; path = Classes/Calculator/SZError.h; sourceTree = "<group>"; };
+		846D8DA7189968DC004C6807 /* SZError.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SZError.m; path = Classes/Calculator/SZError.m; sourceTree = "<group>"; };
 		84AD5E081889612F00DB1EED /* SZStringCalculator.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SZStringCalculator.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		84AD5E0B1889612F00DB1EED /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		84AD5E0D1889612F00DB1EED /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -220,6 +223,8 @@
 				84AD5E4B18896BFE00DB1EED /* SZOperationNode.m */,
 				84E25C44188FFF7A00EA8029 /* SZBracketNode.h */,
 				84E25C45188FFF7A00EA8029 /* SZBracketNode.m */,
+				846D8DA6189968DC004C6807 /* SZError.h */,
+				846D8DA7189968DC004C6807 /* SZError.m */,
 			);
 			name = "Math expression parser";
 			sourceTree = "<group>";
@@ -325,6 +330,7 @@
 				84E25C3D188FD98900EA8029 /* NSMutableArray+Stack.m in Sources */,
 				84AD5E431889635700DB1EED /* SZCalculator.m in Sources */,
 				84E25C43188FE83300EA8029 /* SZMathGrammar.m in Sources */,
+				846D8DA8189968DC004C6807 /* SZError.m in Sources */,
 				84AD5E4F18896FDF00DB1EED /* SZExpressionParser.m in Sources */,
 				84AD5E491889682100DB1EED /* SZNumberNode.m in Sources */,
 				84AD5E221889612F00DB1EED /* SZViewController.m in Sources */,

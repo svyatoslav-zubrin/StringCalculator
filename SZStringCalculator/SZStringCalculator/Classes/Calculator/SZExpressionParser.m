@@ -7,6 +7,7 @@
 //
 
 #import "SZExpressionParser.h"
+#import "SZError.h"
 
 #import "SZNode.h"
 #import "SZNumberNode.h"
@@ -38,11 +39,16 @@
 
 #pragma mark - Publics
 
-- (SZNode *)parseExpressionString:(NSString *)expressionString
+- (SZNode *)parseExpressionString:(NSString *)expressionString error:(NSError **)error
 {
-    BOOL isExpressionValid = [self validateExpression:expressionString error:nil];
+    BOOL isExpressionValid = [self validateExpression:expressionString error:error];
     if (!isExpressionValid)
     {
+        [[[UIAlertView alloc] initWithTitle:@"Not a valid expression"
+                                    message:[*error description]
+                                   delegate:nil
+                          cancelButtonTitle:@"OK"
+                          otherButtonTitles:nil] show];
         NSLog(@"Not a valid expression: %@", expressionString);
         return nil;
     }
@@ -50,7 +56,7 @@
     NSArray *splittedExpressionString = [self splitExpressionStringOnTokens:expressionString];
     NSArray *infixNodes = [self convertTokensToNodes:splittedExpressionString];
     NSLog(@"infix notation: %@", infixNodes);
-    return [self constructTreeFromNodes:infixNodes error:nil];
+    return [self constructTreeFromNodes:infixNodes error:error];
 }
 
 #pragma mark - Privates
@@ -69,10 +75,13 @@
     for (int i = 0; i < [self.operationsSymbolString length]; i++)
     {
         NSRange currentOperationRange = NSMakeRange(i, 1);
-        NSString *currentCharacter = [self.operationsSymbolString substringWithRange:currentOperationRange];
-        NSString *replacementCharacter = [NSString stringWithFormat:@" %@ ", currentCharacter];
-        cleanExpressionString = [cleanExpressionString stringByReplacingOccurrencesOfString:currentCharacter
-                                                                                 withString:replacementCharacter];
+        NSString *currentCharacter = [self.operationsSymbolString
+                                        substringWithRange:currentOperationRange];
+        NSString *replacementCharacter = [NSString stringWithFormat:@" %@ ",
+                                                                    currentCharacter];
+        cleanExpressionString = [cleanExpressionString
+                                    stringByReplacingOccurrencesOfString:currentCharacter
+                                                              withString:replacementCharacter];
     }
     cleanExpressionString = [cleanExpressionString stringByReplacingOccurrencesOfString:@"  "
                                                                              withString:@" "];
@@ -217,9 +226,9 @@
                     }
                     else
                     {
-                        // error: expression inconsistency
-                        
-                        
+                        SZError *e = [[SZError alloc] initWithCode:SZErrorCodeInconsistentMathExpression
+                                                          userInfo:nil];
+                        *error = e;
                         return nil;
                     }
 
@@ -298,6 +307,11 @@
                                        [SZMathGrammar allowedBracketsString]];
     NSString *brackets = [[expression componentsSeparatedByCharactersInSet:
                            [allowedBrackets invertedSet]] componentsJoinedByString:@""];
+    NSMutableArray *openingBracketsCount = [@[] mutableCopy];
+    for (int i = 0; i < [brackets length]; i++)
+    {
+        
+    }
     NSLog(@"brackets: %@", brackets);
     
     return YES;

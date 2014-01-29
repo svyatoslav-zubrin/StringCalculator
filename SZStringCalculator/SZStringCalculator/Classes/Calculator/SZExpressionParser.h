@@ -12,6 +12,6 @@
 
 @interface SZExpressionParser : NSObject
 
-- (SZNode *)parseExpressionString:(NSString *)expressionString;
+- (SZNode *)parseExpressionString:(NSString *)expressionString error:(NSError **)error;
 
 @end
