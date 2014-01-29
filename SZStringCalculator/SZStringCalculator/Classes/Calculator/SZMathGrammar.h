@@ -16,7 +16,9 @@ typedef enum SZOperationType
     SZOperationTypeMultiply = 2,
     SZOperationTypeDivide = 3,
     SZOperationTypeAddUnary = 4,
-    SZOperationTypeSubtractUnary = 5
+    SZOperationTypeSubtractUnary = 5,
+    SZOperationTypeFirst = SZOperationTypeAdd,
+    SZOperationTypeLast = SZOperationTypeSubtractUnary
 } SZOperationType;
 
 typedef enum SZNodePrecidency
@@ -43,12 +45,21 @@ typedef enum SZBracketType
 
 @interface SZMathGrammar : NSObject
 
+// characters
++ (NSString *)allowedOperationsString;
++ (NSString *)allowedCharactersString;
++ (NSString *)allowedBracketsString;
+
+// operations
++ (SZOperationType)unaryVersionOfType:(SZOperationType)type;
 + (NSString *)stringForOperation:(SZOperationType)type;
 + (SZNodePrecidency)precidencyForOperation:(SZOperationType)type;
 
+// brackets
 + (NSString *)stringForBracket:(SZBracketType)type;
 + (SZNodePrecidency)precidencyForBracket:(SZBracketType)type;
 
+// nodes
 + (SZNode *)createNodeFromString:(NSString *)string
                            unary:(BOOL)isUnary;
 

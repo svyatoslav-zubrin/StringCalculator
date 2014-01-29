@@ -40,9 +40,15 @@
     return [self initWithValue:valueNumber parentNode:nil];
 }
 
+- (CGFloat)calculateWithError:(NSError * __autoreleasing *)error
+{
+    return [self.value floatValue];
+}
+
 - (NSString *)description
 {
     return [NSString stringWithFormat:@" %@ ", self.value];
 }
+
 
 @end

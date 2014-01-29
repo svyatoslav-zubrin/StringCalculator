@@ -20,5 +20,6 @@
 @property (nonatomic, strong) SZNode *parentNode;
 
 - (id)initWithParentNode:(SZNode *)node;
+- (CGFloat)calculateWithError:(NSError **)error;
 
 @end

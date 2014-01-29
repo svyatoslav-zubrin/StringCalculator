@@ -36,4 +36,9 @@
     return [self initWithParentNode:nil];
 }
 
+- (CGFloat)calculateWithError:(NSError * __autoreleasing *)error
+{
+    return 0.0;
+}
+
 @end

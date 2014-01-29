@@ -58,35 +58,70 @@
 
 - (id)initWithString:(NSString *)string unary:(BOOL)isUnary
 {
-    SZOperationType t;
-    
-    if ([string isEqualToString:@"+"])
+    for (int t = SZOperationTypeFirst; t < SZOperationTypeLast; t++)
     {
-        if (isUnary)
-            t = SZOperationTypeAddUnary;
-        else
-            t = SZOperationTypeAdd;
-    }
-    else if ([string isEqualToString:@"-"])
-    {
-        if (isUnary)
-            t = SZOperationTypeSubtractUnary;
-        else
-            t = SZOperationTypeSubtract;
-    }
-    else if ([string isEqualToString:@"*"])
-    {
-        t = SZOperationTypeMultiply;
-    }
-    else // "/"
-    {
-        t = SZOperationTypeDivide;
+        if ([string isEqualToString:[SZMathGrammar stringForOperation:t]])
+        {
+            SZOperationType realType = isUnary ? [SZMathGrammar unaryVersionOfType:t] : t;
+            
+            return [self initWithParentNode:nil
+                              FirstArgument:nil
+                             secondArgument:nil
+                                     ofType:realType];
+        }
     }
     
-    return [self initWithParentNode:nil
-                      FirstArgument:nil
-                     secondArgument:nil
-                             ofType:t];
+    return nil;
+}
+
+- (CGFloat)calculateWithError:(NSError * __autoreleasing *)error
+{
+    if ([self isUnary])
+    {
+        if (self.type == SZOperationTypeAddUnary)
+            return [self.firstArgument calculateWithError:error];
+        else
+            return -[self.firstArgument calculateWithError:error];
+    }
+    else
+    {
+        CGFloat secondArg = [self.secondArgument calculateWithError:error];
+        if (self.type == SZOperationTypeDivide
+                && secondArg == 0)
+        {
+            *error = [NSError errorWithDomain:@"math.parser"
+                                         code:1000
+                                     userInfo:@{NSLocalizedDescriptionKey : @"Division by zero"}];
+            return FLT_MAX;
+        }
+        else
+        {
+            CGFloat firstArg = [self.firstArgument calculateWithError:error];
+            if (!*error)
+            {
+                if (self.type == SZOperationTypeAdd)
+                {
+                    return firstArg + secondArg;
+                }
+                else if (self.type == SZOperationTypeSubtract)
+                {
+                    return firstArg - secondArg;
+                }
+                else if (self.type == SZOperationTypeMultiply)
+                {
+                    return firstArg * secondArg;
+                }
+                else // divide
+                {
+                    return firstArg/secondArg;
+                }
+            }
+            else
+            {
+                return FLT_MAX;
+            }
+        }
+    }
 }
 
 - (NSString *)description

@@ -28,7 +28,9 @@
     self = [super init];
     if (self)
     {
-        self.operationsSymbolString = @"+-/*=(){}[]";
+        self.operationsSymbolString = [NSString stringWithFormat:@"%@%@",
+                                       [SZMathGrammar allowedOperationsString],
+                                       [SZMathGrammar allowedBracketsString]];
         
     }
     return self;
@@ -38,10 +40,17 @@
 
 - (SZNode *)parseExpressionString:(NSString *)expressionString
 {
+    BOOL isExpressionValid = [self validateExpression:expressionString error:nil];
+    if (!isExpressionValid)
+    {
+        NSLog(@"Not a valid expression: %@", expressionString);
+        return nil;
+    }
+    
     NSArray *splittedExpressionString = [self splitExpressionStringOnTokens:expressionString];
     NSArray *infixNodes = [self convertTokensToNodes:splittedExpressionString];
     NSLog(@"infix notation: %@", infixNodes);
-    return [self constructTreeFromNodes:infixNodes];
+    return [self constructTreeFromNodes:infixNodes error:nil];
 }
 
 #pragma mark - Privates
@@ -50,17 +59,14 @@
 {
     // 1. leave only allowed characters
     NSMutableCharacterSet *allowedSymbols = [[NSMutableCharacterSet alloc] init];
-    [allowedSymbols formUnionWithCharacterSet:[NSCharacterSet decimalDigitCharacterSet]];
-    [allowedSymbols formUnionWithCharacterSet:
-        [NSCharacterSet characterSetWithCharactersInString:self.operationsSymbolString]];
-    NSMutableCharacterSet *forbiddenSymbols = [[NSMutableCharacterSet alloc] init];
-    [forbiddenSymbols formUnionWithCharacterSet:[allowedSymbols invertedSet]];
-    [forbiddenSymbols formUnionWithCharacterSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
-    NSString *cleanExpressionString = [[expressionString componentsSeparatedByCharactersInSet:forbiddenSymbols]
+    [allowedSymbols addCharactersInString:[SZMathGrammar allowedCharactersString]];
+    [allowedSymbols addCharactersInString:self.operationsSymbolString];
+    NSString *cleanExpressionString  = [[expressionString componentsSeparatedByCharactersInSet:
+                                         [allowedSymbols invertedSet]]
                                             componentsJoinedByString:@""];
-    
-    // 2. insert whitespaces around operations, than split with witespaces
-    for (int i = 0; i < [self.operationsSymbolString length]; i++ )
+
+    // 2. insert whitespaces around operations, than split with whitespaces
+    for (int i = 0; i < [self.operationsSymbolString length]; i++)
     {
         NSRange currentOperationRange = NSMakeRange(i, 1);
         NSString *currentCharacter = [self.operationsSymbolString substringWithRange:currentOperationRange];
@@ -72,7 +78,6 @@
                                                                              withString:@" "];
     cleanExpressionString = [cleanExpressionString stringByTrimmingCharactersInSet:
                                 [NSCharacterSet whitespaceAndNewlineCharacterSet]];
-    NSLog(@"clean expression:\"%@\"", cleanExpressionString);
     
     NSArray *expressionTokens = [cleanExpressionString componentsSeparatedByString:@" "];
 
@@ -105,6 +110,7 @@
 }
 
 - (SZNode *)constructTreeFromNodes:(NSArray *)infixNodes
+                             error:(NSError **)error
 {
     /*  Logic
 
@@ -160,7 +166,7 @@
         {
             [numbersStack push:node];
         }
-        else if ([node isKindOfClass:[SZOperationNode class]]
+        else if ([node isKindOfClass:[SZOperationNode class]] // If the token is a unary prefix operator, push it on to the stack.
                      && ((SZOperationNode *)node).isUnary)
         {
             [operationsStack push:node];
@@ -174,20 +180,8 @@
                         && [stackNode isKindOfClass:[SZOperationNode class]]
                         && node.precidency <= stackNode.precidency)
                 {
-                    [operationsStack pop];
-                    if (stackNode.isUnary)
-                    {
-                        SZNode *arg = [numbersStack pop];
-                        [stackNode setFirstArgument:arg];
-                    }
-                    else
-                    {
-                        SZNode *secondArgument = [numbersStack pop];
-                        SZNode *firstArgument  = [numbersStack pop];
-                        [stackNode setFirstArgument:firstArgument];
-                        [stackNode setSecondArgument:secondArgument];
-                    }
-                    [numbersStack push:stackNode];
+                    [self handleOperationFromStack:operationsStack
+                           withParametersFromStack:numbersStack];
                 }
                 else // Push A onto the stack.
                 {
@@ -202,7 +196,7 @@
             {
                 [operationsStack push:node];
             }
-            else
+            else // If the token is a closing bracket:
             {
                 for (;;) // Pop operators off the stack and append them to the output, until the operator at the top of the stack is a opening bracket.
                 {
@@ -217,27 +211,15 @@
                         }
                         else
                         {
-                            [operationsStack pop];
-
-                            if (stackNode.isUnary)
-                            {
-                                SZNode *arg = [numbersStack pop];
-                                [stackNode setFirstArgument:arg];
-                            }
-                            else
-                            {
-                                SZNode *secondArgument = [numbersStack pop];
-                                SZNode *firstArgument  = [numbersStack pop];
-                                [stackNode setFirstArgument:firstArgument];
-                                [stackNode setSecondArgument:secondArgument];
-                            }
-                            
-                            [numbersStack push:stackNode];
+                            [self handleOperationFromStack:operationsStack
+                                   withParametersFromStack:numbersStack];
                         }
                     }
                     else
                     {
                         // error: expression inconsistency
+                        
+                        
                         return nil;
                     }
 
@@ -249,22 +231,11 @@
     // construct tree
     for (;;)
     {
-        SZOperationNode *operation = [operationsStack pop];
+        SZOperationNode *operation = [operationsStack pop_back];
         if (operation)
         {
-            if (operation.isUnary)
-            {
-                SZNode *arg = [numbersStack pop];
-                [operation setFirstArgument:arg];
-            }
-            else
-            {
-                SZNode *secondArgument = [numbersStack pop];
-                SZNode *firstArgument  = [numbersStack pop];
-                [operation setFirstArgument:firstArgument];
-                [operation setSecondArgument:secondArgument];
-            }
-            [numbersStack push:operation];
+            [self handleOperationFromStack:operationsStack
+                   withParametersFromStack:numbersStack];
         }
         else
         {
@@ -273,6 +244,63 @@
     }
 
     return [numbersStack pop];
+}
+
+-(void)handleOperationFromStack:(NSMutableArray *)operationsStack
+        withParametersFromStack:(NSMutableArray *)parametrsStack
+{
+    SZOperationNode *node = [operationsStack pop];
+    
+    if (node.isUnary)
+    {
+        SZNode *arg = [parametrsStack pop];
+        [node setFirstArgument:arg];
+    }
+    else
+    {
+        SZNode *secondArgument = [parametrsStack pop];
+        SZNode *firstArgument  = [parametrsStack pop];
+        [node setFirstArgument:firstArgument];
+        [node setSecondArgument:secondArgument];
+    }
+    
+    [parametrsStack push:node];
+}
+
+#pragma mark - Helpers
+
+- (NSArray *)charactersInSet:(NSCharacterSet *)set
+{
+    NSMutableArray *array = [NSMutableArray array];
+    for (int plane = 0; plane <= 16; plane++) {
+        if ([set hasMemberInPlane:plane]) {
+            UTF32Char c;
+            for (c = plane << 16; c < (plane+1) << 16; c++) {
+                if ([set longCharacterIsMember:c]) {
+                    UTF32Char c1 = OSSwapHostToLittleInt32(c); // To make it byte-order safe
+                    NSString *s = [[NSString alloc] initWithBytes:&c1
+                                                           length:4
+                                                         encoding:NSUTF32LittleEndianStringEncoding];
+                    [array addObject:s];
+                }
+            }
+        }
+    }
+    return array;
+}
+
+#pragma mark - Validation
+
+- (BOOL)validateExpression:(NSString *)expression error:(NSError **)error
+{
+    // TODO: number of openinig and closing brackets must match
+    NSCharacterSet *allowedBrackets = [NSCharacterSet characterSetWithCharactersInString:
+                                       [SZMathGrammar allowedBracketsString]];
+    NSString *brackets = [[expression componentsSeparatedByCharactersInSet:
+                           [allowedBrackets invertedSet]] componentsJoinedByString:@""];
+    NSLog(@"brackets: %@", brackets);
+    
+    return YES;
 }
 
 @end

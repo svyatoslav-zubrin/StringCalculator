@@ -30,11 +30,10 @@
 #pragma mark - Publics
 
 - (CGFloat)calculateExpression:(NSString *)expressionString
-                         error:(NSError **)error
+                         error:(NSError * __autoreleasing *)error
 {
     SZNode *rootNode = [self.parser parseExpressionString:expressionString];
-    NSLog(@"RootNode: %@", rootNode);
-    return 0.0f;
+    return [rootNode calculateWithError:error];
 }
 
 @end

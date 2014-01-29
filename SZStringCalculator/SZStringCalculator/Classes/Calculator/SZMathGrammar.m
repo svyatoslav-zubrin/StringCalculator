@@ -16,29 +16,47 @@
 
 @implementation SZMathGrammar
 
-+ (NSString *)stringForOperation:(SZOperationType)type
+#pragma mark - Characters
+
++ (NSString *)allowedCharactersString
+{
+    return @"0123456789.";
+}
+
++ (NSString *)allowedBracketsString
+{
+    return @"()";
+}
+
++ (NSString *)allowedOperationsString
+{
+    return @"+-/*";
+}
+
+#pragma mark - Operations
+
++ (SZOperationType)unaryVersionOfType:(SZOperationType)type
 {
     switch (type) {
-        case SZOperationTypeAdd             : return @"+";
-        case SZOperationTypeAddUnary        : return @"u+";
-        case SZOperationTypeDivide          : return @"/";
-        case SZOperationTypeMultiply        : return @"*";
-        case SZOperationTypeSubtract        : return @"-";
-        case SZOperationTypeSubtractUnary   : return @"u-";
-        default                             : return @"NOP";
+        case SZOperationTypeAdd             :
+        case SZOperationTypeAddUnary        : return SZOperationTypeAddUnary;
+        case SZOperationTypeDivide          : return SZOperationTypeDivide;
+        case SZOperationTypeMultiply        : return SZOperationTypeMultiply;
+        case SZOperationTypeSubtract        :
+        case SZOperationTypeSubtractUnary   : return SZOperationTypeSubtractUnary;
     }
 }
 
-+ (NSString *)stringForBracket:(SZBracketType)type
++ (NSString *)stringForOperation:(SZOperationType)type
 {
     switch (type) {
-        case SZBracketTypeRoundOpen     : return @"(";
-        case SZBracketTypeRoundClose    : return @")";
-        case SZBracketTypeSquareOpen    : return @"[";
-        case SZBracketTypeSquareClose   : return @"]";
-        case SZBracketTypeCurlyOpen     : return @"{";
-        case SZBracketTypeCurlyClose    : return @"}";
-        default                         : return @"NOP";
+        case SZOperationTypeAdd             :
+        case SZOperationTypeAddUnary        : return @"+";
+        case SZOperationTypeDivide          : return @"/";
+        case SZOperationTypeMultiply        : return @"*";
+        case SZOperationTypeSubtract        :
+        case SZOperationTypeSubtractUnary   : return @"-";
+        default                             : return @"NOP";
     }
 }
 
@@ -55,10 +73,27 @@
     }
 }
 
+#pragma mark - Brackets
+
++ (NSString *)stringForBracket:(SZBracketType)type
+{
+    switch (type) {
+        case SZBracketTypeRoundOpen     : return @"(";
+        case SZBracketTypeRoundClose    : return @")";
+        case SZBracketTypeSquareOpen    : return @"[";
+        case SZBracketTypeSquareClose   : return @"]";
+        case SZBracketTypeCurlyOpen     : return @"{";
+        case SZBracketTypeCurlyClose    : return @"}";
+        default                         : return @"NOP";
+    }
+}
+
 + (SZNodePrecidency)precidencyForBracket:(SZBracketType)type
 {
     return SZNodePrecidencyLevel3; // 1
 }
+
+#pragma mark - Nodes
 
 + (SZNode *)createNodeFromString:(NSString *)string
                            unary:(BOOL)isUnary
@@ -89,7 +124,5 @@
     
     return node;
 }
-
-
 
 @end
